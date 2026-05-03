@@ -46,4 +46,22 @@ Para que el contenedor YOLO se comunique con la VM y el tráfico sea muestreado:
 *YOLOv8 → Red (Tráfico UDP/TCP):* YOLO procesa las detecciones y envía los resultados (metadatos o video procesado) a través de la red hacia un destino. Esto genera paquetes IP.<br>
 *Tráfico → VM (softflowd):* Los paquetes pasan por la interfaz de red de la VM. Aquí, softflowd (el exportador) observa el tráfico, extrae la 5-tupla y crea paquetes NetFlow.<br>
 *softflowd → Colab (nfdump):* La VM envía los "Flujos NetFlow" (paquetes UDP, usualmente puerto 2055) hacia la instancia de Google Colab donde corre nfdump.<br>
-*nfdump → Dashboard:* nfdump procesa los datos binarios de NetFlow, los convierte a un formato legible (CSV o JSON) y Matplotlib/Streamlit lee esos datos para graficar el consumo de ancho de banda en tiempo real.
+*nfdump → Dashboard:* nfdump procesa los datos binarios de NetFlow, los convierte a un formato legible (CSV o JSON) y Matplotlib/Streamlit lee esos datos para graficar el consumo de ancho de banda en tiempo real.<br><br>
+
+<img width="1022" height="540" alt="image" src="https://github.com/user-attachments/assets/f3f33011-137e-4bcc-aed1-1afb7eeafbc8" /><br>
+```mermaid
+graph TD
+    subgraph Red_Estacion [Subred 10.0.0.0/24]
+        C1[C1: Placas] 
+        C2[C2: Parqueo]
+        C3[C3: Aforo]
+        C4[C4: Animales]
+        C5[C5: Objetos]
+    end
+    ```
+
+
+
+<img width="1040" height="486" alt="image" src="https://github.com/user-attachments/assets/d8a75885-0de7-489f-ac1c-a1603fcb9fd0" />
+
+
