@@ -99,9 +99,39 @@ Se debe implementar un jitter buffer en el receptor para almacenar temporalmente
 
 Cuando hablamos de las reglas de Netflow, se debe tener en cuenta la IP de origen específica de cada contenedor dentro de la subred 10.0.0.0/24, por otro lado, el IP Accounting es como un contador de luz: solo le importa cuánta energía (bytes) pasó por un punto, en este orden de ideas se usuaria de la siguiente forma, se debe activar en la interface del Switch Virtual o el Router, este lo que hace es guardar una tabla dinamica con IP Origen, IP Destino, Bytes y Paquetes, para detectar el mayor emisor se limpia la tabla (clear), se deja correr por 5 minutos, se ejecuta el comando (ejemplo: show ip accounting), ahora lo que se puede observar es que se ordena por la columna de Bytes, se determina que el contenedor con la IP que tenga el número mas alto es el "top talker"<br><br>
 
-<p align="center"><img width="45%" height="580" alt="image" src="https://github.com/user-attachments/assets/776ac456-03a9-478d-91a2-9afc92b0b5c6" /><img width="45%" height="538" alt="image" src="https://github.com/user-attachments/assets/b07786f6-2221-4019-8fe9-91d293c6dcd0" /><img width="45%" height="534" alt="image" src="https://github.com/user-attachments/assets/100ea5cb-abf8-4135-b8c0-ed9c99b1969b" /><img width="45%" height="475" alt="image" src="https://github.com/user-attachments/assets/83ef7f68-3ede-403b-9318-af7fb89cf7a9" /><img width="45%" height="465" alt="image" src="https://github.com/user-attachments/assets/126c5ef7-fe5f-481e-826f-02771e0a3f51" /><img width="45%" height="467" alt="image" src="https://github.com/user-attachments/assets/4ed83768-63f5-4cbb-9ab0-68e557f76a2e" /></p> 
+<p align="center"><img width="45%" height="580" alt="image" src="https://github.com/user-attachments/assets/776ac456-03a9-478d-91a2-9afc92b0b5c6" /><img width="45%" height="538" alt="image" src="https://github.com/user-attachments/assets/b07786f6-2221-4019-8fe9-91d293c6dcd0" /><img width="45%" height="534" alt="image" src="https://github.com/user-attachments/assets/100ea5cb-abf8-4135-b8c0-ed9c99b1969b" /><img width="45%" height="475" alt="image" src="https://github.com/user-attachments/assets/83ef7f68-3ede-403b-9318-af7fb89cf7a9" /><img width="45%" height="465" alt="image" src="https://github.com/user-attachments/assets/126c5ef7-fe5f-481e-826f-02771e0a3f51" /><img width="45%" height="467" alt="image" src="https://github.com/user-attachments/assets/4ed83768-63f5-4cbb-9ab0-68e557f76a2e" /></p> <br>
 
+🔴***Generación de tráfico:***<br>
+El script Python usa la librería ultralytics para cargar YOLOv8. Por cada detección en un video, se envía un mensaje UDP al puerto 5555 de la IP local.<br><br>
 
+🔴***Captura y Conversión*** <br>
+Se usa tcpdump para capturar el tráfico en la interfaz local (lo) y guardarlo en un archivo .pcap.<br>
+Luego, nflow-gen convierte ese archivo al formato NetFlow (.nf) para que pueda ser analizado.<br><br>
 
+Para realizar la practica directamente en Google Colab, se ejecuto un Script donde nos muestra el trafico de descarga del video y otro Script que nos muestra el IP accounting, debido a que se tienen algunas denegaciones de permisos por la misma plataforma, en las imágenes que se dejan a continuación se pueden observar los Scripts que se ejecutaron.<br>
 
+<p align="center"><img width="45%" height="677" alt="image" src="https://github.com/user-attachments/assets/4c20b3ac-351c-448e-92ab-c98811fecd97" /><img width="45%" height="636" alt="image" src="https://github.com/user-attachments/assets/3d9870bc-b71a-4160-834c-ff29b589a8a7" /><img width="45%" height="644" alt="image" src="https://github.com/user-attachments/assets/b0abd03b-7075-47d4-b013-6acb72822fd9" /><img width="45%" height="641" alt="image" src="https://github.com/user-attachments/assets/aa915353-cdfb-4857-9da3-37568374addf" /><img width="45%" height="636" alt="image" src="https://github.com/user-attachments/assets/677b7a84-1381-4037-aa02-c77b92c2090c" /></p> <br>
 
+🔴***Verificación de IP Accounting (Conteo de Tráfico)*** <br>
+En tus capturas se observa una coincidencia exacta entre la aplicación y la red:<br>
+**Paquetes enviados (Script):** 20<br>
+**Paquetes capturados (Network):** 20<br>
+**Tamaño del archivo PCAP:** 1714 bytes.<br>
+*CONCLUSIÓN:* Se logró una integridad del 100% en la transmisión. No hubo pérdida de paquetes (packet loss), lo cual es ideal para un sistema de monitoreo en tiempo real basado en UDP en una red local (loopback).<br><br>
+
+🔴***Análisis de la 5-tuple (Identificación del Flujo)*** <br>
+El reporte de tcpdump nos entrega la 5-tuple completa de los flujos generados:<br>
+**IP Origen:** 127.0.0.1 (La instancia de Colab donde corre el script de IA).<br>
+**IP Destino:** 127.0.0.1 (El destino configurado para el colector).<br>
+**Puerto Origen:** 56019 (o similar, asignado dinámicamente por el sistema operativo).<br>
+**Puerto Destino:** 5555 (Puerto definido para el servicio de telemetría).<br>
+**Protocolo:** UDP (Protocolo de transporte ligero, sin confirmación, ideal para streaming de datos).<br><br>
+
+🔴***Implementación de Muestreo (sFlow)*** <br>
+Aunque en la prueba final forzamos el envío de todos los paquetes para verificar la red, la lógica de muestreo 1:10 (enviar 1 de cada 10 detecciones):<br>
+**Propósito:** Reducir el consumo de ancho de banda.<br>
+**Impacto en enlaces lentos:** Al enviar solo el 10% de la telemetría, se evita la saturación del canal sin perder la visibilidad estadística del comportamiento de la cámara inteligente.<br><br>
+
+🔴***Limitaciones y Justificación Técnica*** <br>
+Es importante mencionar lo siguiente de la practica:<br>
+Se utilizó tcpdump como herramienta de IP Accounting en lugar de iptables debido a que Google Colab opera en un entorno de contenedores restringido que no permite la modificación de las tablas de filtrado del kernel (Operation not permitted). Sin embargo, se validó el tráfico de forma exitosa mediante el análisis de archivos de captura de paquetes (PCAP).
