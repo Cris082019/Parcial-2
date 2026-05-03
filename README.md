@@ -57,7 +57,8 @@ graph TD
         C2[C2: Parqueo]
         C3[C3: Aforo]
         C4[C4: Animales]
-        C5[C5: Objetos] 
+        C5[C5: Objetos]
+end
    ```
 
 
