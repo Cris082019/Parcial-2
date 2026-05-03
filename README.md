@@ -39,8 +39,8 @@ graph LR
     style C fill:#bbf,stroke:#333,stroke-width:2px
    ```
 Para que el contenedor YOLO se comunique con la VM y el tráfico sea muestreado:<br>
-🔵**Comunicación:** Se debe configurar una red virtual (como un bridge de Docker o un switch virtual) donde el contenedor tenga una IP en el mismo segmento que la VM.<br>
-🔵**Regla de IP Accounting (iptables):** Para medir el tráfico, usaría: iptables -A FORWARD -s 172.17.0.0/16 -d 192.168.1.10 -j ACCEPT ---> Para medir tráfico saliente del contenedor a la VM o podría usar también iptables -A FORWARD -s 192.168.1.10 -d 172.17.0.0/16 -j ACCEPT ---> Para medir tráfico entrante de la VM al contenedor, también podría revisar las estadisticas con iptables -L FORWARD -v -n. <br>
+🔵**Comunicación:** Se debe configurar una red virtual (como un bridge de Docker o un switch virtual) donde el contenedor tenga una IP en el mismo segmento que la VM.<br><br>
+🔵**Regla de IP Accounting (iptables):** Para medir el tráfico, usaría: iptables -A FORWARD -s 172.17.0.0/16 -d 192.168.1.10 -j ACCEPT ---> Para medir tráfico saliente del contenedor a la VM o podría usar también iptables -A FORWARD -s 192.168.1.10 -d 172.17.0.0/16 -j ACCEPT ---> Para medir tráfico entrante de la VM al contenedor, también podría revisar las estadisticas con iptables -L FORWARD -v -n. <br><br>
 🔵**Descripción diagrama de flujo**<br>
 *Cámara USB → Contenedor YOLOv8:* La cámara captura el video raw y lo entrega al contenedor (usualmente montando el dispositivo /dev/video0).<br>
 *YOLOv8 → Red (Tráfico UDP/TCP):* YOLO procesa las detecciones y envía los resultados (metadatos o video procesado) a través de la red hacia un destino. Esto genera paquetes IP.<br>
