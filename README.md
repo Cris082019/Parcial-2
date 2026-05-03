@@ -63,8 +63,10 @@ La información llega a un grupo de servidores redundantes. Esto significa que, 
 🟢***Dashboard***<br>
 Finalmente, toda esa tecnología se traduce en algo que una persona puede entender fácilmente:<br>
 **Seguridad:** Ve las alertas en tiempo real y el video de las cámaras.<br>
-**Ingeniería:** Revisa gráficas claras (hechas en Streamlit) sobre la salud de la red y el consumo de datos gracias al análisis de NetFlow.
+**Ingeniería:** Revisa gráficas claras (hechas en Streamlit) sobre la salud de la red y el consumo de datos gracias al análisis de NetFlow.<br><br>
 
+<img width="1023" height="490" alt="image" src="https://github.com/user-attachments/assets/6dc84aea-5f4c-4bb6-b59e-e8e49905d175" />
+<img width="1028" height="443" alt="image" src="https://github.com/user-attachments/assets/e11dacd2-cb21-446d-ac76-7d1d6f7b9d5f" />
 ```mermaid
 graph TD
     subgraph Red_Estacion [Subred 10.0.0.0/24]
