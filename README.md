@@ -85,14 +85,14 @@ graph TD
     style VM1 fill:#dfd
     style VM2 fill:#fdd
 ```
-***Cálculo de Throughput por contenedor:*** <br>
+➖***Cálculo de Throughput por contenedor:*** <br>
 **Video:** 30 fps × 50 KB/frame = 1500 KB/s. Convertido a bits: 1500×8=12,000 Kbps o 12 Mbps<br>
 **Metadata:** 200 bytes × 10 det/s = 2000 bytes/s. Convertido a bits: 2000×8=16,000 bps o 0.016 Mbps<br>
 **Total por contenedor:** 12.016 Mbps.<br>
 **Total 5 contenedores:** 60.08 Mbps<br><br>
 
-***Protocolo para Video:*** <br>
+➖***Protocolo para Video:*** <br>
 El más adecuado es UDP. Debido a que el video es en tiempo real y la red tiene baja latencia (2 ms), es mejor perder un frame ocasional que retrasar todo el stream esperando retransmisiones de TCP<br><br>
 
-***Mitigación de Jitter:*** <br>
+➖***Mitigación de Jitter:*** <br>
 Se debe implementar un jitter buffer en el receptor para almacenar temporalmente los paquetes y entregarlos de manera constante.
