@@ -58,6 +58,6 @@ graph TD
         C3[C3: Aforo]
         C4[C4: Animales]
         C5[C5: Objetos]
-```
+   ```
 
 
