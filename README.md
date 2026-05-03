@@ -49,6 +49,11 @@ Para que el contenedor YOLO se comunique con la VM y el tráfico sea muestreado:
 *nfdump → Dashboard:* nfdump procesa los datos binarios de NetFlow, los convierte a un formato legible (CSV o JSON) y Matplotlib/Streamlit lee esos datos para graficar el consumo de ancho de banda en tiempo real.<br><br>
 
 <img width="1022" height="540" alt="image" src="https://github.com/user-attachments/assets/f3f33011-137e-4bcc-aed1-1afb7eeafbc8" /><br>
+<img width="1024" height="547" alt="image" src="https://github.com/user-attachments/assets/0f4d76a1-0ee4-4c1a-a0ea-11102357bf27" /><br>
+
+
+
+
 
 ```mermaid
 graph TD
