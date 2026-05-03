@@ -57,8 +57,13 @@ Para enviar esta información al centro de datos, usamos un Router Virtual. Este
 **Vigila el tráfico (NetFlow):** Mide cuánto ancho de banda consume cada cámara para que la red no se sature.<br>
 **Prioriza lo importante (QoS):** Si la red está lenta, el sistema da paso preferencial a las alertas de seguridad (metadata) por encima del video común.<br>
 
+🟢***Servidores Centrales*** <br>
+La información llega a un grupo de servidores redundantes. Esto significa que, si un servidor falla, los otros toman el control de inmediato para que el monitoreo nunca se detenga. Aquí se guarda todo en una base de datos segura y se organizan los reportes de tráfico.<br><br>
 
-
+🟢***Dashboard***<br>
+Finalmente, toda esa tecnología se traduce en algo que una persona puede entender fácilmente:<br>
+**Seguridad:** Ve las alertas en tiempo real y el video de las cámaras.<br>
+**Ingeniería:** Revisa gráficas claras (hechas en Streamlit) sobre la salud de la red y el consumo de datos gracias al análisis de NetFlow.
 
 ```mermaid
 graph TD
