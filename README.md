@@ -40,5 +40,10 @@ graph LR
    ```
 Para que el contenedor YOLO se comunique con la VM y el tráfico sea muestreado:<br>
 🔵**Comunicación:** Se debe configurar una red virtual (como un bridge de Docker o un switch virtual) donde el contenedor tenga una IP en el mismo segmento que la VM.<br>
-🔵**Regla de IP Accounting (iptables):** Para medir el tráfico, usaría: sudo iptables -A FORWARD -s [subred_contenedor] -d [IP_VM] -j ACCEPT.<br>
-🔵
+🔵**Regla de IP Accounting (iptables):** Para medir el tráfico, usaría: iptables -A FORWARD -s 172.17.0.0/16 -d 192.168.1.10 -j ACCEPT ---> Para medir tráfico saliente del contenedor a la VM o podría usar también iptables -A FORWARD -s 192.168.1.10 -d 172.17.0.0/16 -j ACCEPT ---> Para medir tráfico entrante de la VM al contenedor, también podría revisar las estadisticas con iptables -L FORWARD -v -n. <br>
+🔵**Descripción diagrama de flujo**<br>
+*Cámara USB → Contenedor YOLOv8:* La cámara captura el video raw y lo entrega al contenedor (usualmente montando el dispositivo /dev/video0).<br>
+*YOLOv8 → Red (Tráfico UDP/TCP):* YOLO procesa las detecciones y envía los resultados (metadatos o video procesado) a través de la red hacia un destino. Esto genera paquetes IP.<br>
+*Tráfico → VM (softflowd):* Los paquetes pasan por la interfaz de red de la VM. Aquí, softflowd (el exportador) observa el tráfico, extrae la 5-tupla y crea paquetes NetFlow.<br>
+*softflowd → Colab (nfdump):* La VM envía los "Flujos NetFlow" (paquetes UDP, usualmente puerto 2055) hacia la instancia de Google Colab donde corre nfdump.<br>
+*nfdump → Dashboard:* nfdump procesa los datos binarios de NetFlow, los convierte a un formato legible (CSV o JSON) y Matplotlib/Streamlit lee esos datos para graficar el consumo de ancho de banda en tiempo real.
