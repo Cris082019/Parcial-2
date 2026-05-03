@@ -58,7 +58,13 @@ graph TD
         C3[C3: Aforo]
         C4[C4: Animales]
         C5[C5: Objetos]
-end
-   ```
+    end
+    
+    C1 & C2 & C3 & C4 & C5 --> SW[Switch Virtual / Bridge]
+    SW --> VM1[VM1: Colector Principal]
+    SW --> VM2[VM2: Respaldo Redundante]
+    
+    style VM1 fill:#dfd
+    style VM2 fill:#fdd
 
 
