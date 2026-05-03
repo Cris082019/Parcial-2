@@ -26,8 +26,9 @@ La asimetría extrema (como en este caso, 1500 paquetes enviados vs. 50 recibido
 **Comportamiento de Carga Masiva (Bulk Upload):** El host .1.10 está cargando datos masivos a un servidor en .0.5. El tráfico de ida es pesado, mientras que el tráfico de vuelta son solo confirmaciones (ACKs) de TCP muy pequeñas.<br>
 **Ataque de DoS/DDoS (ej. Inundación SYN):** Un host puede estar enviando una gran cantidad de solicitudes de conexión (paquetes SYN) a un servidor, y el servidor no responde (o las respuestas no vuelven a través de este enrutador), creando una enorme disparidad.<br>
 **Escaneo de Red/Puertos:** Un host escaneando miles de puertos en otro host, y solo unos pocos puertos responden.<br>
-<img width="1024" height="545" alt="image" src="https://github.com/user-attachments/assets/0de61598-e557-476d-a369-0a5fb989f704" />
+<img width="1024" height="545" alt="image" src="https://github.com/user-attachments/assets/0de61598-e557-476d-a369-0a5fb989f704" /><br><br>
 
+<img width="1046" height="517" alt="image" src="https://github.com/user-attachments/assets/778fb8d1-609c-48a2-891f-9678caca20d4" /><br>
 
 
 
