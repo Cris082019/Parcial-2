@@ -58,10 +58,3 @@ graph TD
         C4[C4: Animales]
         C5[C5: Objetos]
     end
-    ```
-
-
-
-<img width="1040" height="486" alt="image" src="https://github.com/user-attachments/assets/d8a75885-0de7-489f-ac1c-a1603fcb9fd0" />
-
-
