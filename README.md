@@ -66,5 +66,4 @@ graph TD
     
     style VM1 fill:#dfd
     style VM2 fill:#fdd
-
-
+```
