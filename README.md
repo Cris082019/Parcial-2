@@ -95,4 +95,8 @@ graph TD
 El más adecuado es UDP. Debido a que el video es en tiempo real y la red tiene baja latencia (2 ms), es mejor perder un frame ocasional que retrasar todo el stream esperando retransmisiones de TCP<br><br>
 
 ➖***Mitigación de Jitter:*** <br>
-Se debe implementar un jitter buffer en el receptor para almacenar temporalmente los paquetes y entregarlos de manera constante.
+Se debe implementar un jitter buffer en el receptor para almacenar temporalmente los paquetes y entregarlos de manera constante.<br><br>
+
+Cuando hablamos de las reglas de Netflow, se debe tener en cuenta la IP de origen específica de cada contenedor dentro de la subred 10.0.0.0/24, por otro lado, el IP Accounting es como un contador de luz: solo le importa cuánta energía (bytes) pasó por un punto, en este orden de ideas se usuaria de la siguiente forma, se debe activar en la interface del Switch Virtual o el Router, este lo que hace es guardar una tabla dinamica con IP Origen, IP Destino, Bytes y Paquetes, para detectar el mayor emisor se limpia la tabla (clear), se deja correr por 5 minutos, se ejecuta el comando (ejemplo: show ip accounting), ahora lo que se puede observar es que se ordena por la columna de Bytes, se determina que el contenedor con la IP que tenga el número mas alto es el "top talker"<br><br>
+
+
