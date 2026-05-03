@@ -38,7 +38,7 @@ graph LR
     style B fill:#f9f,stroke:#333,stroke-width:2px
     style C fill:#bbf,stroke:#333,stroke-width:2px
    ```
-Para que el contenedor YOLO se comunique con la VM y el tráfico sea muestreado:
-🔵**Comunicación:** Se debe configurar una red virtual (como un bridge de Docker o un switch virtual) donde el contenedor tenga una IP en el mismo segmento que la VM
-🔵**Regla de IP Accounting (iptables):** Para medir el tráfico, usaría: sudo iptables -A FORWARD -s [subred_contenedor] -d [IP_VM] -j ACCEPT
+Para que el contenedor YOLO se comunique con la VM y el tráfico sea muestreado:<br>
+🔵**Comunicación:** Se debe configurar una red virtual (como un bridge de Docker o un switch virtual) donde el contenedor tenga una IP en el mismo segmento que la VM.<br>
+🔵**Regla de IP Accounting (iptables):** Para medir el tráfico, usaría: sudo iptables -A FORWARD -s [subred_contenedor] -d [IP_VM] -j ACCEPT.<br>
 🔵
