@@ -29,10 +29,6 @@ La asimetría extrema (como en este caso, 1500 paquetes enviados vs. 50 recibido
 <img width="1024" height="545" alt="image" src="https://github.com/user-attachments/assets/0de61598-e557-476d-a369-0a5fb989f704" /><br><br>
 
 <img width="1046" height="517" alt="image" src="https://github.com/user-attachments/assets/778fb8d1-609c-48a2-891f-9678caca20d4" /><br>
-
-
-
-
 ```mermaid
 graph LR
     A[Cámara USB] --> B(Contenedor Docker: YOLOv8)
@@ -42,3 +38,7 @@ graph LR
     style B fill:#f9f,stroke:#333,stroke-width:2px
     style C fill:#bbf,stroke:#333,stroke-width:2px
    ``` 
+Para que el contenedor YOLO se comunique con la VM y el tráfico sea muestreado:
+🔵**Comunicación:** Se debe configurar una red virtual (como un bridge de Docker o un switch virtual) donde el contenedor tenga una IP en el mismo segmento que la VM
+🔵**Regla de IP Accounting (iptables):** Para medir el tráfico, usaría: sudo iptables -A FORWARD -s [subred_contenedor] -d [IP_VM] -j ACCEPT
+🔵
