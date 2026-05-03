@@ -1,14 +1,32 @@
 ## Parcial-2
 
 <img width="1047" height="590" alt="image" src="https://github.com/user-attachments/assets/abc99b7f-6dbf-458b-8265-258de295aee9" /><br>
-***Diferencia entre NetFlow y sFlow:***
+🔴***Diferencia entre NetFlow y sFlow:*** <br>
 **NetFlow:** Realiza un seguimiento de todos los paquetes pertenecientes a un flujo específico. Es más detallado pero consume más recursos de procesamiento<br>
 **sFlow:** Es un muestreo estadístico basado en paquetes; no analiza cada paquete sino una muestra (1 de cada N)<br>
-**Elección para 100 Gbps:** Elegiría sFlow, ya que a velocidades tan altas como 100 Gbps, procesar cada paquete para NetFlow puede saturar la CPU del router; el muestreo estadístico de sFlow es mucho más eficiente para identificar "top talkers" sin degradar el rendimiento del enlace
+**Elección para 100 Gbps:** Elegiría sFlow, ya que a velocidades tan altas como 100 Gbps, procesar cada paquete para NetFlow puede saturar la CPU del router; el muestreo estadístico de sFlow es mucho más eficiente para identificar "top talkers" sin degradar el rendimiento del enlace<br><br>
 
+🔴***Los 5 campos de la 5-tuple en NetFlow:*** <br>
+**Dirección IP de Origen (Source IP):** Identifica quién envía los datos.<br>
+**Dirección IP de Destino (Destination IP):** Identifica hacia dónde van los datos.<br>
+**Puerto de Origen (Source Port):** El puerto en el dispositivo de origen (a menudo efímero).<br>
+**Puerto de Destino (Destination Port):** El puerto en el dispositivo de destino que identifica el servicio (ej. 80, 443).<br>
+**Protocolo de Capa 4 (Protocol):** Ej. TCP (6) o UDP (17).<br><br>
 
+🔴***Medición por aplicación:*** <br>
+Para diferenciar HTTP de SSH, el colector debe inspeccionar el puerto de destino, un ejemplo de este puede ser el puerto 80/443 para HTTP y puerto 22 para SSH, se debe tener en cuenta que el puerto destino es el indicador clave para identificar la naturaleza de la aplicación.<br><br>
 
+🔴***Interpretación de datos (IP Accounting):*** <br> 
+La tabla muestra el tráfico que pasa a través del enrutador de Cisco. Los recuentos de paquetes y bytes son los totales para cada par de origen-destino acumulados hasta el momento. No se trata de flujos completados, sino de un contador en tiempo real. Los datos muestran flujos entre 192.168.1.10 y 10.0.0.5.<br>
+Se observa que el primer host envió 1500 paquetes, mientras que el segundo solo respondió con 50.<br><br>
 
+🔴***Asimetría extrema:*** <br>
+Una diferencia tan marcada indicaría que la comunicación es mayormente unidireccional, lo que podría sugerir una transferencia masiva de datos (descarga), un posible ataque de denegación de servicio o problemas de enrutamiento asimétrico en la red.<br>
+La asimetría extrema (como en este caso, 1500 paquetes enviados vs. 50 recibidos) entre 192.168.1.10 y 10.0.0.5 indicaría típicamente:<br>
+**Comportamiento de Carga Masiva (Bulk Upload):** El host .1.10 está cargando datos masivos a un servidor en .0.5. El tráfico de ida es pesado, mientras que el tráfico de vuelta son solo confirmaciones (ACKs) de TCP muy pequeñas.<br>
+**Ataque de DoS/DDoS (ej. Inundación SYN):** Un host puede estar enviando una gran cantidad de solicitudes de conexión (paquetes SYN) a un servidor, y el servidor no responde (o las respuestas no vuelven a través de este enrutador), creando una enorme disparidad.<br>
+**Escaneo de Red/Puertos:** Un host escaneando miles de puertos en otro host, y solo unos pocos puertos responden.<br>
+<img width="1024" height="545" alt="image" src="https://github.com/user-attachments/assets/0de61598-e557-476d-a369-0a5fb989f704" />
 
 
 
