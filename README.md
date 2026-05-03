@@ -50,7 +50,12 @@ Para que el contenedor YOLO se comunique con la VM y el tráfico sea muestreado:
 
 <img width="1022" height="540" alt="image" src="https://github.com/user-attachments/assets/f3f33011-137e-4bcc-aed1-1afb7eeafbc8" /><br>
 <img width="1024" height="547" alt="image" src="https://github.com/user-attachments/assets/0f4d76a1-0ee4-4c1a-a0ea-11102357bf27" /><br>
+Para el diagrama descrito en la imagen usamos contenedores Docker (uno por cámara) que ejecutan modelos YOLOv8. Cada uno tiene una misión distinta: leer placas, contar personas o detectar objetos olvidados. De aquí salen dos cosas: el video con etiquetas y los datos puros (metadata).<br><br>
 
+🟢***Red y NetFlow*** <br>
+Para enviar esta información al centro de datos, usamos un Router Virtual. Este componente hace dos tareas clave:<br>
+**Vigila el tráfico (NetFlow):** Mide cuánto ancho de banda consume cada cámara para que la red no se sature.<br>
+**Prioriza lo importante (QoS):** Si la red está lenta, el sistema da paso preferencial a las alertas de seguridad (metadata) por encima del video común.<br>
 
 
 
